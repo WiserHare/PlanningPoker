@@ -33,7 +33,7 @@ import saschpe.android.versioninfo.widget.VersionInfoDialogFragment
 import saschpe.poker.BuildConfig
 import saschpe.poker.R
 import saschpe.poker.application.Application
-import saschpe.poker.customtabs.CustomTabs
+import saschpe.poker.extensions.startPrivacyPolicy
 
 class HelpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class HelpActivity : AppCompatActivity() {
                 if (uri != null && uri.host != null && uri.host == "about") {
                     when (uri.path) {
                         "/privacy" -> {
-                            CustomTabs.startPrivacyPolicy(this)
+                            startPrivacyPolicy()
                             finish()
                         }
                     }
@@ -83,7 +83,7 @@ class HelpActivity : AppCompatActivity() {
                 finish()
                 return true
             }
-            R.id.privacy_policy -> CustomTabs.startPrivacyPolicy(this)
+            R.id.privacy_policy -> startPrivacyPolicy()
             R.id.open_source_licenses -> startActivity(Intent(this, OssLicensesMenuActivity::class.java))
             R.id.version_info -> {
                 VersionInfoDialogFragment

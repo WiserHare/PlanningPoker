@@ -23,22 +23,10 @@ import androidx.core.content.res.ResourcesCompat
 import saschpe.android.customtabs.CustomTabsHelper
 import saschpe.android.customtabs.WebViewFallback
 import saschpe.poker.R
-import saschpe.poker.util.BitmapHelper
+import saschpe.poker.extensions.bitmapFromVectorDrawable
 
 object CustomTabs {
-    private const val PRIVACY_POLICY_URL =
-        "https://sites.google.com/view/planningpoker/privacy-policy"
-
-    /**
-     * Start Privacy Policy custom tab.
-     *
-     * See https://developer.chrome.com/multidevice/android/customtabs
-     *
-     * @param context Activity context
-     */
-    fun startPrivacyPolicy(context: Context) = startUrl(context, PRIVACY_POLICY_URL)
-
-    private fun startUrl(context: Context, url: String, animate: Boolean = false) {
+    fun startUrl(context: Context, url: String, animate: Boolean = false) {
         val customTabsIntentBuilder = getDefaultCustomTabsIntentBuilder(context)
         if (animate) {
             customTabsIntentBuilder
@@ -48,9 +36,7 @@ object CustomTabs {
         val customTabsIntent = customTabsIntentBuilder.build()
 
         CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
-        CustomTabsHelper.openCustomTab(
-            context, customTabsIntent, Uri.parse(url), WebViewFallback()
-        )
+        CustomTabsHelper.openCustomTab(context, customTabsIntent, Uri.parse(url), WebViewFallback())
     }
 
     private fun getDefaultCustomTabsIntentBuilder(context: Context): CustomTabsIntent.Builder {
@@ -59,7 +45,7 @@ object CustomTabs {
             .setToolbarColor(ResourcesCompat.getColor(context.resources, R.color.primary, null))
             .setShowTitle(true)
 
-        val backArrow = BitmapHelper.getBitmapFromVectorDrawable(context, R.drawable.ic_arrow_back)
+        val backArrow = context.bitmapFromVectorDrawable(R.drawable.ic_arrow_back)
         if (backArrow != null) {
             builder.setCloseButtonIcon(backArrow)
         }
